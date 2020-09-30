@@ -1,3 +1,2 @@
-# Project 3
-
-Web Programming with Python and JavaScript
+PIZZA MANIA
+Web application for handling pizza restaurant's online orders.
