@@ -9,17 +9,18 @@ class Toppings(models.Model):
     
 class Category(models.Model):
     category_name = models.CharField(max_length=64)
-
+    image = models.ImageField(upload_to="category_images/", default=' ')
     def __str__(self):
         return f"Category : {self.category_name}"
 
 class Items(models.Model):
-    item_category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="Items")
+    category_name = models.ForeignKey(Category, on_delete=models.CASCADE,related_name='items')
     item_name = models.CharField(max_length=64)
     max_toppings = models.IntegerField(null=True)
+    image = models.ImageField(upload_to="item_images/", default=' ')
 
     def __str__(self):
-        return f"Item Category: {item_category} Name: {item_name} Max_toppings: {max_toppings}"
+        return f"Item Category: {self.category_name} Name: {self.item_name} Max_toppings: {self.max_toppings}"
 
 class Pricing(models.Model):
     SIZE_TYPES = (
