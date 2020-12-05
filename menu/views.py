@@ -12,9 +12,40 @@ def menu(request):
     })
 
 def show_items(request, c_name ):
-    item_list =  Items.objects.filter(category_name__category_name=c_name)
-    print(item_list)
+    c_name = c_name.strip('/')
+    items = Items.objects.filter(category_name__category_name=c_name)
+    columns = findItems(c_name)
+    print(columns)
     print(c_name)
-    return render(request, "menu/items.html", {
-        "items": Items.objects.filter(category_name__category_name=c_name)
-    })
+    print(items)
+    
+
+    for item in items:
+        name = item.item_name
+        print(name)
+       # price = Pricing.objects.filter(item_name__item_name=name)
+        #print(price)
+        #pricing.append(price)
+    context = {
+        "items" : items,
+        "columns" : columns,
+        "category" : c_name,
+        #"pricing" : pricing
+    }
+    
+    return render(request, "menu/items.html", context)
+
+def findItems(category:str):
+    if category == "Regular Pizza":
+        columns = 3
+    elif category == "Sicilian Pizza":
+        columns = 3
+    elif category == "Subs":
+        columns = 3
+    elif category == "Salads":
+        columns = 2
+    elif category == "Pasta":
+        columns = 2
+    elif category == "Dinner Platters":
+        columns = 3
+    return columns

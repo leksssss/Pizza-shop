@@ -1,16 +1,46 @@
 {% extends 'menu/base.html' %}
 {% block body %}
 
-<div class="card-columns" style="padding-top: 5%;">
-    {% for item in items %}
-    <div class="card bg-dark">
-      <img class="card-img-top" src="{{ item.image.url }}" alt="Card image cap">
-        <div class="card-body">
-        <h5 class="card-title">{{ item.item_name }}</h5>
-      </div>
-      </a>
-    </div>
-    {% endfor %}
-  </div>
-
+<table class="table table-hover" style="padding-top: 5%;">
+  <caption>{{ category }}</caption>
+    {% if columns == 3 %}
+    <thead class="thead-dark">
+      <tr>
+        <th> </th>
+        <th>Item Name</th>
+        <th>Small</th>
+        <th>Large</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for item in items %}
+      <tr>
+        <td><img src="{{ item.image.url }}" alt="Card image cap" style="display: block;" width="100%" height="auto"></td>
+        <td><h5>{{ item.item_name }}</h5></td>  
+        <td><h5>{{ item.small }}</h5></td>
+        <td><h5>{{ item.large }}</h5></td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    {% endif %}
+    
+    {% if columns == 2 %} 
+    <thead class="thead-dark">
+      <tr>
+        <th> </th>
+        <th>Item Name</th>
+        <th>Price</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for item in items %}
+      <tr>
+        <td><img src="{{ item.image.url }}" alt="Card image cap" style="display: block;" width="100%" height="auto"></td>
+        <td><h5>{{ item.item_name }}</h5></td>  
+        <td><h5>{{ item.price }}</h5></td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    {% endif %}
+    </table>
 {% endblock %}
