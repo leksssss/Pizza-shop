@@ -12,3 +12,5 @@ document.addEventListener('DOMContentLoaded',()=>{
         }
     }
   });
+
+  //try adding a select topping button and then selecting based on its separate class
