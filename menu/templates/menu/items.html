@@ -1,12 +1,13 @@
-{% extends 'menu/base.html' %}
+{% extends 'menu/navbar_extra.html' %}
+
 {% block body %}
 
-<table class="table table-hover" style="padding-top: 5%;">
-  <caption>{{ category }}</caption>
+
+<table class="table table-hover" style="table-layout: fixed;">
     {% if columns == 3 %}
-    <thead class="thead-dark">
+    <thead class="thead-dark" >
       <tr>
-        <th> </th>
+        <th  style="padding-top:5%"> {{ category }}</th>
         <th>Item Name</th>
         <th>Small</th>
         <th>Large</th>
@@ -15,10 +16,49 @@
       <tbody>
       {% for item in items %}
       <tr>
-        <td><img src="{{ item.image.url }}" alt="Card image cap" style="display: block;" width="100%" height="auto"></td>
-        <td><h5>{{ item.item_name }}</h5></td>  
-        <td><h5>{{ item.small }}</h5></td>
-        <td><h5>{{ item.large }}</h5></td>
+        {% load static %}
+        <td><img class="img-thumbnail" src="{{ item.image.url }}" alt="Card image cap" width="40%" height="20%" style="object-fit: cover;" ></td>
+        <td>
+          <h5>{{ item.item_name }}</h5>
+          {% if item.max_toppings > 0 %}
+          <div class="multiselect">
+            <div class="selectBox" onclick="showCheckboxes()">
+              <select>
+                <option>Select Toppings</option>
+              </select>
+              <div class="overSelect"></div>
+            </div>
+            <div id="checkboxes">
+              {% for t in toppings %}
+              <label>
+                <input type="checkbox">{{ t.item_name }}
+              </label>
+              {% endfor %}
+            </div>
+          </div>
+          <!--
+          <select class="toppings" multiple="multiple">
+            {% for t in toppings %}
+            <option value="{{ t }}">{{ t.item_name }}</option>
+            {% endfor %}
+          </select>
+         
+        -->
+          {% endif %}
+          <p class="maxval">{{ item.max_toppings }}</p>
+        </td>  
+        <td>
+          <h5>${{ item.small }}</h5>
+          <a href="#"><img class="plus" src="{% static 'menu/add.jpg' %}" width="40px" height="auto"></a>
+          &nbsp;&nbsp;
+          <a href="#"><img class="delete" src="{% static 'menu/delete.jpg' %}" width="40px" height="auto"></a>
+        </td>
+        <td>
+          <h5>${{ item.large }}</h5>
+          <a href="#"><img class="plus" src="{% static 'menu/add.jpg' %}" width="40px" height="auto"></a>
+          &nbsp;&nbsp;
+          <a href="#"><img class="delete" src="{% static 'menu/delete.jpg' %}" width="40px" height="auto"></a>
+        </td>
       </tr>
       {% endfor %}
       </tbody>
@@ -27,20 +67,34 @@
     {% if columns == 2 %} 
     <thead class="thead-dark">
       <tr>
-        <th> </th>
+        <th  style="padding-top:5%">{{ category }} </th>
         <th>Item Name</th>
         <th>Price</th>
       </tr>
-      </thead>
-      <tbody>
+    </thead>
+    <tbody>
       {% for item in items %}
       <tr>
-        <td><img src="{{ item.image.url }}" alt="Card image cap" style="display: block;" width="100%" height="auto"></td>
+        <td><img class="img-thumbnail" src="{{ item.image.url }}" alt="Card image cap" width="20%" height="20%" style="object-fit: cover;"></td>
         <td><h5>{{ item.item_name }}</h5></td>  
-        <td><h5>{{ item.price }}</h5></td>
+        <td>
+          <h5>${{ item.price }}</h5>
+          <a href="#"><img class="plus" src="{% static 'menu/add.jpg' %}" width="40px" height="auto"></a>
+          &nbsp;&nbsp;
+          <a href="#"><img class="delete" src="{% static 'menu/delete.jpg' %}" width="40px" height="auto"></a>
+        </td>
       </tr>
       {% endfor %}
-      </tbody>
+    </tbody>
     {% endif %}
     </table>
+    <script>
+      var limit = document.querySelector('.maxval').innerHTML;
+      $("p.toppings").on('change', function(evt) {
+        if($(this).siblings(':checked').length >= limit) {
+            this.checked = false;
+        }
+      });
+      
+    </script>
 {% endblock %}

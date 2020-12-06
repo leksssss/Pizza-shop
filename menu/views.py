@@ -15,22 +15,15 @@ def show_items(request, c_name ):
     c_name = c_name.strip('/')
     items = Items.objects.filter(category_name__category_name=c_name)
     columns = findItems(c_name)
-    print(columns)
-    print(c_name)
-    print(items)
-    
-
-    for item in items:
-        name = item.item_name
-        print(name)
-       # price = Pricing.objects.filter(item_name__item_name=name)
-        #print(price)
-        #pricing.append(price)
+    #toppings = None
+    if c_name == "Regular Pizza" or c_name == "Sicilian Pizza":
+        toppings = Toppings.objects.all()
     context = {
         "items" : items,
         "columns" : columns,
         "category" : c_name,
-        #"pricing" : pricing
+        "toppings" : toppings,
+        "login_id" : "Login"
     }
     
     return render(request, "menu/items.html", context)

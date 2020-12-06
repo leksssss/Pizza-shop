@@ -1,0 +1,15 @@
+{% extends 'menu/base.html' %}
+{% if login_id %}
+  {% block nav %}
+  <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <button class="btn btn-warning" id="my_cart">My Cart</button>
+      </li> &nbsp;&nbsp;
+      <li class="nav-item">
+        <button class="btn btn-warning" id="signin">Login</button>
+      </li>
+    </ul>
+  </div>
+  {% endblock %}
+{% endif %}
