@@ -15,7 +15,7 @@ def show_items(request, c_name ):
     c_name = c_name.strip('/')
     items = Items.objects.filter(category_name__category_name=c_name)
     columns = findItems(c_name)
-    #toppings = None
+    toppings = None
     if c_name == "Regular Pizza" or c_name == "Sicilian Pizza":
         toppings = Toppings.objects.all()
     context = {
