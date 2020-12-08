@@ -22,36 +22,127 @@ th{
     width: 50px;
 }
 
-.multiselect {
-  width: 200px;
+.dropdown-check-list {
+  display: inline-block;
 }
 
-.selectBox {
+.dropdown-check-list .anchor {
   position: relative;
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 50px 5px 10px;
+  border: 1px solid #ccc;
 }
 
-.selectBox select {
-  width: 100%;
-  font-weight: bold;
-}
-
-.overSelect {
+.dropdown-check-list .anchor:after {
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+  content: "";
+  border-left: 2px solid black;
+  border-top: 2px solid black;
+  padding: 5px;
+  right: 10px;
+  top: 20%;
+  -moz-transform: rotate(-135deg);
+  -ms-transform: rotate(-135deg);
+  -o-transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}
+.dropdown-check-list .anchor:active:after {
+  right: 8px;
+  top: 21%;
 }
 
-#checkboxes {
+.dropdown-check-list ul.items {
+  padding: 2px;
   display: none;
-  border: 1px #dadada solid;
+  margin: 0;
+  border: 1px solid #ccc;
+  border-top: none;
 }
 
-#checkboxes label {
+.dropdown-check-list ul.items li {
+  list-style: none;
+}
+
+.dropdown-check-list.visible .anchor {
+  color: #1b537a;
+}
+
+.dropdown-check-list.visible .items {
   display: block;
 }
 
-#checkboxes label:hover{
-  background-color: #1e90ff;
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 8;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.modal-content {
+  margin: 50px auto;
+  border: 1px solid #999;
+  width: 60%;
+}
+h3,p {
+  margin: 0 0 20px;
+  font-weight: 400;
+  color: #999;
+}      
+span {
+  color: #666;
+  display: block;
+  padding: 0 0 5px;
+}
+form {
+  padding: 25px;
+  margin: 25px;
+  box-shadow: 0 2px 5px #f5f5f5;
+  background: #eee;
+}
+
+.topping-form button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background: #1c87c9;
+  font-size: 16px;
+  font-weight: 400;
+  color: #fff;
+}
+button:hover {
+  background: #0cac3c;
+}
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+button.button {
+  background: none;
+  border-top: none;
+  outline: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: #02274a 1px solid;
+  padding: 0 0 3px 0;
+  font-size: 16px;
+  cursor: pointer;
+}
+button.button:hover {
+  border-bottom: #a99567 1px solid;
+  color: #a99567;
 }

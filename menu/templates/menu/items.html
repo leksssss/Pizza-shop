@@ -20,46 +20,44 @@
         <td><img class="img-thumbnail" src="{{ item.image.url }}" alt="Card image cap" width="44%" height="30%" style="object-fit: cover;" ></td>
         <td>
           <h5>{{ item.item_name }}</h5>
-          {% if item.max_toppings > 0 %}
-          <div class="multiselect">
-            <div class="selectBox" onclick="showCheckboxes()">
-              <select>
-                <option>Select Toppings</option>
-              </select>
-              <div class="overSelect"></div>
-            </div>
-            <div id="checkboxes">
-              {% for t in toppings %}
-              <label>
-                <input type="checkbox">{{ t.item_name }}
-              </label>
-              {% endfor %}
-            </div>
-          </div>
-          <!--
-          <select class="toppings" multiple="multiple">
-            {% for t in toppings %}
-            <option value="{{ t }}">{{ t.item_name }}</option>
-            {% endfor %}
-          </select>
-         
-        -->
-          {% endif %}
           <p class="maxval">{{ item.max_toppings }}</p>
         </td>  
         <td>
           <h5>${{ item.small }}</h5>
-          <a href="#"><img class="plus" src="{% static 'menu/add.jpg' %}" width="40px" height="auto"></a>
+          <button class="btn btn-link"><img class="plus" data-modal="modalOne" src="{% static 'menu/add.jpg' %}" width="40px" height="auto"></button>
           &nbsp;&nbsp;
           <a href="#"><img class="delete" src="{% static 'menu/delete.jpg' %}" width="40px" height="auto"></a>
         </td>
         <td>
           <h5>${{ item.large }}</h5>
-          <a href="#"><img class="plus" src="{% static 'menu/add.jpg' %}" width="40px" height="auto"></a>
+          <button class="btn btn-link"><img class="plus" data-modal="modalOne" src="{% static 'menu/add.jpg' %}" width="40px" height="auto"></button>
           &nbsp;&nbsp;
           <a href="#"><img class="delete" src="{% static 'menu/delete.jpg' %}" width="40px" height="auto"></a>
         </td>
       </tr>
+      <div id="modalOne" class="modal">
+        <div class="modal-content">
+          <div class="topping-form">
+            <a class="close">&times;</a>
+            <form action="/">
+              
+              <h3 style="text-align:center;">Toppings</h3>  
+              <div id="list1" class="dropdown-check-list" tabindex="100">
+                <span class="anchor">Choose Toppings</span>
+                <ul class="items">
+                  <div style="OVERFLOW-Y:scroll; WIDTH:600px; HEIGHT:300px">
+                  {% for t in toppings %}
+                  <li><input type="checkbox" />{{ t.item_name }}</li>
+                  {% endfor %}
+                </div>
+                </ul>
+              </div>
+              
+              <button type="submit">Add</button>
+            </form>
+          </div>
+        </div>
+      </div>
       {% endfor %}
       </tbody>
     {% endif %}
@@ -89,6 +87,26 @@
     {% endif %}
     </table>
     <script>
+      let modalBtns = [...document.querySelectorAll(".plus")];
+      modalBtns.forEach(function(btn) {
+        btn.onclick = function() {
+          let modal = btn.getAttribute('data-modal');
+          document.getElementById(modal)
+            .style.display = "block";
+        }
+      });
+      let closeBtns = [...document.querySelectorAll(".close")];
+      closeBtns.forEach(function(btn) {
+        btn.onclick = function() {
+          let modal = btn.closest('.modal');
+          modal.style.display = "none";
+        }
+      });
+      window.onclick = function(event) {
+        if(event.target.className === "modal") {
+          event.target.style.display = "none";
+        }
+      }
       var limit = document.querySelector('.maxval').innerHTML;
       $("p.toppings").on('change', function(evt) {
         if($(this).siblings(':checked').length >= limit) {
