@@ -39,21 +39,21 @@
         <div class="modal-content">
           <div class="topping-form">
             <a class="close">&times;</a>
-            <form action="/">
+            <form action="/" id="t" name="t">
               
               <h3 style="text-align:center;">Toppings</h3>  
               <div id="list1" class="dropdown-check-list" tabindex="100">
                 <span class="anchor">Choose Toppings</span>
                 <ul class="items">
-                  <div style="OVERFLOW-Y:scroll; WIDTH:600px; HEIGHT:300px">
+                  <div style="OVERFLOW-Y:scroll; WIDTH:600px; HEIGHT:300px" id="tl">
                   {% for t in toppings %}
-                  <li><input type="checkbox" />{{ t.item_name }}</li>
+                  <li><input type="checkbox" class="bla" name="bla" onclick="checkboxlimit()"/>{{ t.item_name }}</li>
                   {% endfor %}
                 </div>
                 </ul>
               </div>
               
-              <button type="submit">Add</button>
+              <button class="btn btn-rounded" type="submit">Add</button>
             </form>
           </div>
         </div>
@@ -107,12 +107,41 @@
           event.target.style.display = "none";
         }
       }
-      var limit = document.querySelector('.maxval').innerHTML;
-      $("p.toppings").on('change', function(evt) {
-        if($(this).siblings(':checked').length >= limit) {
+      
+      function checkboxlimit(){    
+        var limit = parseInt(document.querySelector('.maxval').innerHTML);
+        var el = document.getElementById('tl');
+
+        // get reference to input elements in toppings container element
+        var tops = el.getElementsByTagName('input');
+
+        // assign function to onclick property of each checkbox
+        for (var i=0, len=tops.length; i<len; i++) {
+            if ( tops[i].type === 'checkbox' ) {
+                tops[i].onclick = function() {
+                    // put your awesome code here
+                    var checkedcount=0;
+                    for (var i=0; i<checkgroup.length; i++)
+                        checkedcount+=(checkgroup[i].checked)? 1 : 0
+                    if (checkedcount>limit){
+                        alert("You can only select a maximum of "+limit+" checkboxes")
+                        this.checked=false
+                    }
+                }
+            }
+        }
+        
+    }
+    
+      
+      /*
+      checkboxlimit(document.forms.t.bla, limit)
+
+      $("input.bla").on('change', function(evt) {
+        if($("input[name='bla']:checked").length > limit) {
             this.checked = false;
         }
       });
-      
+      */
     </script>
 {% endblock %}

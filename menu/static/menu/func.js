@@ -6,5 +6,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     else
         checkList.classList.add('visible');
     }
-    }
-);
+    
+    
+    
+});
